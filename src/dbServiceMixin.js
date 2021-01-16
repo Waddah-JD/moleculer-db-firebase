@@ -139,6 +139,9 @@ module.exports = {
     },
   },
 
+  /**
+   * Methods
+   */
   methods: {
     /**
      * Connect to database.
@@ -227,7 +230,7 @@ module.exports = {
      *
      * @param {Context} ctx
      *
-     * @returns {Array} documents
+     * @returns {Object} a mapping of ids  to found documents
      */
     async find(ctx) {
       const { conditions, limit, orderBy } = ctx.params;

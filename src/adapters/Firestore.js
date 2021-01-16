@@ -97,7 +97,7 @@ class CloudFireStoreDbAdapter {
    * @param {Number?} limit
    * @param {Array?<String>} orderBy
    *
-   * @returns {Array} documents
+   * @returns {Object} a mapping of ids  to found documents
    *
    * @memberof CloudFireStoreDbAdapter
    */
