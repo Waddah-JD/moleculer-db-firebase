@@ -4,7 +4,14 @@ const _ = require("lodash");
 const { ValidationError } = require("moleculer").Errors;
 
 const pkg = require("../package.json");
-const { singleId, multipleIds } = require("./paramsSchemas/id");
+const {
+  singleIdSchema,
+  multipleIdsSchema,
+  conditionsSchema,
+  limitSchema,
+  orderBySchema,
+  requiredObjectSchema,
+} = require("./paramsSchemas");
 
 /**
  * Service mixin to access database entities
@@ -66,7 +73,7 @@ module.exports = {
     get: {
       cache: { keys: ["id"] },
       rest: "GET /:id",
-      params: { id: [...singleId, ...multipleIds] },
+      params: { id: [...singleIdSchema, ...multipleIdsSchema] },
       handler(ctx) {
         const { id } = ctx.params;
 
@@ -90,6 +97,11 @@ module.exports = {
      * @returns {Array} documents
      */
     find: {
+      params: {
+        conditions: conditionsSchema,
+        limit: limitSchema,
+        orderBy: orderBySchema,
+      },
       handler(ctx) {
         return this.find(ctx);
       },
@@ -106,6 +118,7 @@ module.exports = {
      */
     create: {
       rest: "POST /",
+      params: { doc: requiredObjectSchema },
       handler(ctx) {
         return this.create(ctx);
       },
@@ -123,6 +136,7 @@ module.exports = {
      */
     update: {
       rest: "PUT /:id",
+      params: { id: singleIdSchema, values: requiredObjectSchema },
       handler(ctx) {
         return this.update(ctx);
       },
@@ -139,6 +153,7 @@ module.exports = {
      */
     delete: {
       rest: "DELETE /:id",
+      params: { id: singleIdSchema },
       handler(ctx) {
         return this.delete(ctx);
       },

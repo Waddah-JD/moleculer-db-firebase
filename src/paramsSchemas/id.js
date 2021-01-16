@@ -1,9 +1,13 @@
-const singleId = [{ type: "string" }, { type: "number" }, { type: "uuid" }];
+const singleIdSchema = [
+  { type: "string" },
+  { type: "number" },
+  { type: "uuid" },
+];
 
-const multipleIds = [
+const multipleIdsSchema = [
   { type: "array", items: "string" },
   { type: "array", items: "number" },
   { type: "array", items: "uuid" },
 ];
 
-module.exports = { singleId, multipleIds };
+module.exports = { singleIdSchema, multipleIdsSchema };
