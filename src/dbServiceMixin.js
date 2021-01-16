@@ -68,7 +68,13 @@ module.exports = {
       rest: "GET /:id",
       params: { id: [...singleId, ...multipleIds] },
       handler(ctx) {
-        return this.get(ctx);
+        const { id } = ctx.params;
+
+        if (_.isArray(id)) {
+          return this.findByIds(ctx);
+        } else {
+          return this.get(ctx);
+        }
       },
     },
 
@@ -251,6 +257,19 @@ module.exports = {
       const { id } = ctx.params;
 
       return await this.adapter.findById(id);
+    },
+
+    /**
+     * Get documents by their IDs
+     *
+     * @param {Array<String>|Array<UUID>} id
+     *
+     * @returns {Object} a mapping of ids  to found documents
+     */
+    async findByIds(ctx) {
+      const { id } = ctx.params;
+
+      return await this.adapter.findByIds(id);
     },
 
     /**

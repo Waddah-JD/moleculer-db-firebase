@@ -140,6 +140,19 @@ class CloudFireStoreDbAdapter {
   }
 
   /**
+   * Get documents by their ID
+   *
+   * @param {Array<String>|Array<UUID>} id
+   *
+   * @returns {Object} a mapping of ids  to found documents
+   *
+   * @memberof CloudFireStoreDbAdapter
+   */
+  async findByIds(ids) {
+    return await this.find({ conditions: [["_id", "in", ids]] });
+  }
+
+  /**
    * Create a document
    *
    * @param {Object} document
