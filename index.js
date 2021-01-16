@@ -1,3 +1,7 @@
-"use strict"
+"use strict";
 
-module.exports = require("./src")
+const dbServiceMixin = require("./src/dbServiceMixin");
+
+const { FirestoreAdapter } = require("./src/adapters");
+
+module.exports = { dbServiceMixin, FirestoreAdapter };
