@@ -64,6 +64,8 @@ class CloudFireStoreDbAdapter {
   /**
    * Parse DocumentSnapshot to object
    *
+   * @param {Object} DocumentSnapshot
+   *
    * @returns {Object} document
    *
    * @memberof CloudFireStoreDbAdapter
@@ -75,7 +77,9 @@ class CloudFireStoreDbAdapter {
   /**
    * Parse QuerySnapshot to object
    *
-   * @returns {Array} documents
+   * @param {Object} QuerySnapshot
+   *
+   * @returns {Object} a mapping of ids  to found documents
    *
    * @memberof CloudFireStoreDbAdapter
    */
