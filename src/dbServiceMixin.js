@@ -94,9 +94,17 @@ module.exports = {
      */
     list: {
       rest: "GET /",
-      params: {},
+      params: {
+        next: { type: "object", optional: true },
+        orderBy: { type: "string", optional: true },
+        limit: limitSchema,
+      },
       handler(ctx) {
-        return this.list(ctx);
+        if (ctx.params.next || ctx.params.orderBy) {
+          return this.list(ctx);
+        } else {
+          return this.getAll(ctx);
+        }
       },
     },
 
@@ -266,7 +274,7 @@ module.exports = {
      *
      * @param {Context} ctx
      *
-     * @returns {Object} a mapping of ids  to found documents
+     * @returns {Object} a mapping of ids to found documents
      */
     async find(ctx) {
       const { conditions, limit, orderBy } = ctx.params;
@@ -275,16 +283,37 @@ module.exports = {
     },
 
     /**
-     * List all documents
+     * Get all documents
+     *
+     * @methods
+     *
+     * @returns {Object} a mapping of ids to found documents
+     */
+    async getAll() {
+      return await this.adapter.getAll();
+    },
+
+    /**
+     * List all documents with pagination
      *
      * @methods
      *
      * @param {Context} ctx
      *
-     * @returns {Object} document
+     * @returns {Object} containing 'docs' and 'nextQuery'
      */
     async list(ctx) {
-      return await this.adapter.list();
+      let limit = this.settings.pageSize;
+
+      if (ctx.params.limit && ctx.params.limit < this.settings.maxPageSize) {
+        limit = ctx.params.limit;
+      }
+
+      return await this.adapter.list(
+        limit,
+        ctx.params.orderBy,
+        ctx.params.next
+      );
     },
 
     /**

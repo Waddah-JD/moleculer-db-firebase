@@ -95,13 +95,53 @@ class CloudFireStoreDbAdapter {
   }
 
   /**
+   * List documents with pagination
+   *
+   * @returns {Object} containing 'docs' and 'nextQuery'
+   *
+   * @memberof CloudFireStoreDbAdapter
+   */
+  async list(limit, orderBy, nextQuery) {
+    let querySnapshot;
+
+    if (nextQuery) {
+      querySnapshot = await nextQuery.get();
+      const docs = this.parseQuerySnapshot(querySnapshot);
+      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+      let next = this.collection;
+      if (orderBy) {
+        next = next.orderBy(orderBy).limit(limit);
+      }
+      next = next.startAfter(lastVisible);
+
+      return { docs, next };
+    } else {
+      if (orderBy) {
+        const first = this.collection.orderBy(orderBy).limit(limit);
+        querySnapshot = await first.get();
+        const docs = this.parseQuerySnapshot(querySnapshot);
+        const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+        const next = this.collection
+          .orderBy(orderBy)
+          .startAfter(lastVisible)
+          .limit(limit);
+        return { docs, next };
+      } else {
+        querySnapshot = await this.collection.get();
+        return this.parseQuerySnapshot(querySnapshot);
+      }
+    }
+  }
+
+  /**
    * List all documents
    *
    * @returns {Object} a mapping of ids  to found documents
    *
    * @memberof CloudFireStoreDbAdapter
    */
-  async list() {
+  async getAll() {
     const querySnapshot = await this.collection.get();
     return this.parseQuerySnapshot(querySnapshot);
   }
