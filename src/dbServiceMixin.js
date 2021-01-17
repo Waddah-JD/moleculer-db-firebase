@@ -86,6 +86,21 @@ module.exports = {
     },
 
     /**
+     * List all documents
+     *
+     * @actions
+     *
+     * @returns {Array} documents
+     */
+    list: {
+      rest: "GET /",
+      params: {},
+      handler(ctx) {
+        return this.list(ctx);
+      },
+    },
+
+    /**
      * Find documents
      *
      * @actions
@@ -257,6 +272,19 @@ module.exports = {
       const { conditions, limit, orderBy } = ctx.params;
 
       return await this.adapter.find({ conditions, limit, orderBy });
+    },
+
+    /**
+     * List all documents
+     *
+     * @methods
+     *
+     * @param {Context} ctx
+     *
+     * @returns {Object} document
+     */
+    async list(ctx) {
+      return await this.adapter.list();
     },
 
     /**

@@ -95,6 +95,18 @@ class CloudFireStoreDbAdapter {
   }
 
   /**
+   * List all documents
+   *
+   * @returns {Object} a mapping of ids  to found documents
+   *
+   * @memberof CloudFireStoreDbAdapter
+   */
+  async list() {
+    const querySnapshot = await this.collection.get();
+    return this.parseQuerySnapshot(querySnapshot);
+  }
+
+  /**
    * Find documents
    *
    * @param {Array?<Array<String>} conditions
