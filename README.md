@@ -1,13 +1,13 @@
 ![Moleculer logo](http://moleculer.services/images/banner.png)
 
-# moleculer-db-adapter-cloud-firestore [![NPM version](https://img.shields.io/npm/v/moleculer-db-adapter-cloud-firestore.svg)](https://www.npmjs.com/package/moleculer-db-adapter-cloud-firestore)
+# moleculer-db-firebase [![NPM version](https://img.shields.io/npm/v/moleculer-db-firebase.svg)](https://www.npmjs.com/package/moleculer-db-firebase)
 
 Firebase 'Cloud Firestore' adapter and service mixin for Moleculer DB service, written in the 'spirit' of `moleculer-db` and its adapters
 
 ## Install
 
 ```bash
-$ npm install moleculer-db-adapter-cloud-firestore --save
+$ npm install moleculer-db-firebase --save
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ const { ServiceBroker } = require("moleculer");
 const {
   dbServiceMixin,
   CloudFirestoreAdapter,
-} = require("moleculer-db-adapter-cloud-firestore");
+} = require("moleculer-db-firebase");
 
 const broker = new ServiceBroker();
 
