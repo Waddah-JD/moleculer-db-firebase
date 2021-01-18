@@ -2,6 +2,6 @@
 
 const dbServiceMixin = require("./src/dbServiceMixin");
 
-const { FirestoreAdapter } = require("./src/adapters");
+const { CloudFirestoreAdapter } = require("./src/adapters");
 
-module.exports = { dbServiceMixin, FirestoreAdapter };
+module.exports = { dbServiceMixin, CloudFirestoreAdapter };

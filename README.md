@@ -2,8 +2,7 @@
 
 # moleculer-db-adapter-cloud-firestore [![NPM version](https://img.shields.io/npm/v/moleculer-db-adapter-cloud-firestore.svg)](https://www.npmjs.com/package/moleculer-db-adapter-cloud-firestore)
 
-MongoDB native adapter for Moleculer DB service.
-Cloud Firestore adapter and service mixin for Moleculer DB service, written in the 'spirit' of `moleculer-db` and its adapters
+Firebase 'Cloud Firestore' adapter and service mixin for Moleculer DB service, written in the 'spirit' of `moleculer-db` and its adapters
 
 ## Install
 
@@ -19,7 +18,7 @@ $ npm install moleculer-db-adapter-cloud-firestore --save
 const { ServiceBroker } = require("moleculer");
 const {
   dbServiceMixin,
-  FirestoreAdapter,
+  CloudFirestoreAdapter,
 } = require("moleculer-db-adapter-cloud-firestore");
 
 const broker = new ServiceBroker();
@@ -28,7 +27,7 @@ const broker = new ServiceBroker();
 broker.createService({
   name: "posts",
   mixins: [dbServiceMixin],
-  adapter: new FirestoreAdapter(
+  adapter: new CloudFirestoreAdapter(
     "insert your 'apiKey' here",
     "insert your 'projectId' here"
   ),

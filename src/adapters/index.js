@@ -1,5 +1,5 @@
 "use strict";
 
-const FirestoreAdapter = require("./Firestore");
+const CloudFirestoreAdapter = require("./CloudFirestore");
 
-module.exports = { FirestoreAdapter };
+module.exports = { CloudFirestoreAdapter };

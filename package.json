@@ -1,12 +1,11 @@
 {
-  "name": "moleculer-db-adapter-cloud-firestore",
+  "name": "moleculer-db-firebase",
   "version": "1.1.0",
-  "description": "Firebase Cloud Firestore adapter for Moleculer DB service.",
+  "description": "Firebase 'Cloud Firestore' adapter for Moleculer DB service.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ext=.js src",
-    "publish:minor": "npm version minor --force && npm publish"
+    "lint": "eslint --ext=.js src"
   },
   "keywords": [
     "microservices",
@@ -16,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Waddah-JD/moleculer-db-adapter-cloud-firestore.git"
+    "url": "https://github.com/Waddah-JD/moleculer-db-firebase.git"
   },
   "author": "Waddah-JD",
   "license": "MIT",
