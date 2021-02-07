@@ -1,0 +1,6 @@
+{
+  "name": "Moleculer DB Firebase",
+  "platforms": ["Admin", "Node"],
+  "content": "README.md",
+  "related": []
+}
