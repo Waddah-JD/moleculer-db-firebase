@@ -1,6 +1,6 @@
 {
   "name": "moleculer-db-firebase",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Firebase 'Cloud Firestore' adapter for Moleculer DB service.",
   "main": "index.js",
   "scripts": {

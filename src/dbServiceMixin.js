@@ -208,7 +208,7 @@ module.exports = {
      * @returns {Promise}
      */
     disconnect() {
-      this.adapter.connect();
+      this.adapter.disconnect();
 
       return Promise.resolve();
     },
