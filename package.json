@@ -4,7 +4,10 @@
   "description": "Firebase 'Cloud Firestore' adapter for Moleculer DB service.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:unit": "jest \"src/.*\\.unit\\.test\\.js\"",
+    "test:unit:watch": "npm run test:unit -- --watch",
     "lint": "eslint --ext=.js src"
   },
   "keywords": [
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "eslint": "^7.17.0",
+    "jest": "^27.1.0",
     "moleculer": "^0.14.12",
     "prettier": "^2.2.1"
   },
