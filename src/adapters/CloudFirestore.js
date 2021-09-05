@@ -4,6 +4,11 @@ const { ServiceSchemaError } = require("moleculer").Errors;
 const firebase = require("firebase");
 require("firebase/firestore");
 
+const {
+  MissingApiKeyError,
+  MissingProjectIdError,
+} = require("../errors/adapter");
+
 class CloudFireStoreDbAdapter {
   /**
    * Creates an instance of CloudFireStoreDbAdapter.
@@ -29,11 +34,13 @@ class CloudFireStoreDbAdapter {
     this.broker = broker;
 
     this.service = service;
-    if (!this.service.schema.collection) {
+    if (!this.service.schema.collection)
       throw new ServiceSchemaError(
         "Missing 'collection' definition in schema of service!"
       );
-    }
+
+    if (!this.apiKey) throw new MissingApiKeyError();
+    if (!this.projectId) throw new MissingProjectIdError();
 
     this.instance = firebase.initializeApp({
       apiKey: this.apiKey,

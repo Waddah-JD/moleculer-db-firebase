@@ -2,9 +2,17 @@
 
 const { ServiceBroker } = require("moleculer");
 const CloudFirestoreAdapter = require("./CloudFirestore");
+const {
+  MissingApiKeyError,
+  MissingProjectIdError,
+} = require("../errors/adapter");
 
 describe("Test CloudFirestore adapter", () => {
   const broker = new ServiceBroker({ logger: false });
+  const service = broker.createService({
+    name: "srv",
+    collection: "posts",
+  });
 
   beforeAll(() => broker.start());
   afterAll(() => broker.stop());
@@ -24,5 +32,17 @@ describe("Test CloudFirestore adapter", () => {
     expect(adapter.create).toBeInstanceOf(Function);
     expect(adapter.update).toBeInstanceOf(Function);
     expect(adapter.delete).toBeInstanceOf(Function);
+  });
+
+  it("should throw an error if any of the required parameters to create adapter are missing", () => {
+    expect(() => {
+      const adapter = new CloudFirestoreAdapter(undefined, "projectId");
+      adapter.init(broker, service);
+    }).toThrow(MissingApiKeyError);
+
+    expect(() => {
+      const adapter = new CloudFirestoreAdapter("apiKey");
+      adapter.init(broker, service);
+    }).toThrow(MissingProjectIdError);
   });
 });
