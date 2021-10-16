@@ -69,4 +69,14 @@ describe("Test CloudFirestore adapter", () => {
       expect(adapter.collection).toBeDefined();
     });
   });
+
+  describe("disconnect", () => {
+    it("should clear 'db' and 'collection' on disconnect", () => {
+      const adapter = new CloudFirestoreAdapter("apiKey", "projectId");
+      adapter.init(broker, service);
+      adapter.disconnect();
+      expect(adapter.db).toBeNull();
+      expect(adapter.collection).toBeNull();
+    });
+  });
 });
