@@ -1,6 +1,8 @@
 "use strict";
 
 const { ServiceBroker } = require("moleculer");
+const firebase = require("firebase");
+
 const CloudFirestoreAdapter = require("./CloudFirestore");
 const {
   MissingApiKeyError,
@@ -21,6 +23,7 @@ describe("Test CloudFirestore adapter", () => {
     const adapter = new CloudFirestoreAdapter("apiKey", "projectId");
 
     expect(adapter).toBeDefined();
+    expect(adapter).toBeInstanceOf(CloudFirestoreAdapter);
     expect(adapter.init).toBeInstanceOf(Function);
     expect(adapter.connect).toBeInstanceOf(Function);
     expect(adapter.disconnect).toBeInstanceOf(Function);
@@ -34,15 +37,24 @@ describe("Test CloudFirestore adapter", () => {
     expect(adapter.delete).toBeInstanceOf(Function);
   });
 
-  it("should throw an error if any of the required parameters to create adapter are missing", () => {
-    expect(() => {
-      const adapter = new CloudFirestoreAdapter(undefined, "projectId");
-      adapter.init(broker, service);
-    }).toThrow(MissingApiKeyError);
+  describe("init", () => {
+    it("should throw an error if any of the required parameters to create adapter are missing", () => {
+      expect(() => {
+        const adapter = new CloudFirestoreAdapter(undefined, "projectId");
+        adapter.init(broker, service);
+      }).toThrow(MissingApiKeyError);
 
-    expect(() => {
-      const adapter = new CloudFirestoreAdapter("apiKey");
+      expect(() => {
+        const adapter = new CloudFirestoreAdapter("apiKey");
+        adapter.init(broker, service);
+      }).toThrow(MissingProjectIdError);
+    });
+
+    it("should have a valid 'instance' if the adapter was passed valid paramters", () => {
+      const adapter = new CloudFirestoreAdapter("apiKey", "projectId");
       adapter.init(broker, service);
-    }).toThrow(MissingProjectIdError);
+
+      expect(adapter.instance).toBeInstanceOf(firebase.app.App);
+    });
   });
 });
