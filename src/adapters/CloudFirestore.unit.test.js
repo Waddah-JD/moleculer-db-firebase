@@ -9,7 +9,7 @@ const {
   MissingProjectIdError,
 } = require("../errors/adapter");
 
-describe("Test CloudFirestore adapter", () => {
+describe("CloudFirestore", () => {
   const broker = new ServiceBroker({ logger: false });
   const service = broker.createService({
     name: "srv",
@@ -19,22 +19,24 @@ describe("Test CloudFirestore adapter", () => {
   beforeAll(() => broker.start());
   afterAll(() => broker.stop());
 
-  it("should be created with required 'public' methods", () => {
-    const adapter = new CloudFirestoreAdapter("apiKey", "projectId");
+  describe("constructor", () => {
+    it("should be created with required 'public' methods", () => {
+      const adapter = new CloudFirestoreAdapter("apiKey", "projectId");
 
-    expect(adapter).toBeDefined();
-    expect(adapter).toBeInstanceOf(CloudFirestoreAdapter);
-    expect(adapter.init).toBeInstanceOf(Function);
-    expect(adapter.connect).toBeInstanceOf(Function);
-    expect(adapter.disconnect).toBeInstanceOf(Function);
-    expect(adapter.list).toBeInstanceOf(Function);
-    expect(adapter.getAll).toBeInstanceOf(Function);
-    expect(adapter.find).toBeInstanceOf(Function);
-    expect(adapter.findById).toBeInstanceOf(Function);
-    expect(adapter.findByIds).toBeInstanceOf(Function);
-    expect(adapter.create).toBeInstanceOf(Function);
-    expect(adapter.update).toBeInstanceOf(Function);
-    expect(adapter.delete).toBeInstanceOf(Function);
+      expect(adapter).toBeDefined();
+      expect(adapter).toBeInstanceOf(CloudFirestoreAdapter);
+      expect(adapter.init).toBeInstanceOf(Function);
+      expect(adapter.connect).toBeInstanceOf(Function);
+      expect(adapter.disconnect).toBeInstanceOf(Function);
+      expect(adapter.list).toBeInstanceOf(Function);
+      expect(adapter.getAll).toBeInstanceOf(Function);
+      expect(adapter.find).toBeInstanceOf(Function);
+      expect(adapter.findById).toBeInstanceOf(Function);
+      expect(adapter.findByIds).toBeInstanceOf(Function);
+      expect(adapter.create).toBeInstanceOf(Function);
+      expect(adapter.update).toBeInstanceOf(Function);
+      expect(adapter.delete).toBeInstanceOf(Function);
+    });
   });
 
   describe("init", () => {
