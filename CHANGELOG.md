@@ -1,3 +1,14 @@
+<a name="1.1.3"></a>
+
+# 1.1.3 (2021-10-16)
+
+## Changes
+
+- throw exceptions in case Adapter creators have invalid signatures
+- add basic unit test and config testing utilities
+
+---
+
 <a name="1.1.2"></a>
 
 # 1.1.2 (2021-08-28)
