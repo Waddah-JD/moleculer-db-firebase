@@ -1,3 +1,13 @@
+<a name="1.1.4"></a>
+
+# 1.1.4 (2021-10-16)
+
+## Changes
+
+- change Firebase connection to a singleton to fix 'duplicate-app' issue
+
+---
+
 <a name="1.1.3"></a>
 
 # 1.1.3 (2021-10-16)
