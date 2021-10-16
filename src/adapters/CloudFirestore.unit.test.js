@@ -57,4 +57,16 @@ describe("Test CloudFirestore adapter", () => {
       expect(adapter.instance).toBeInstanceOf(firebase.app.App);
     });
   });
+
+  describe("connect", () => {
+    it("should have a vaild 'db' field", () => {
+      const adapter = new CloudFirestoreAdapter("apiKey", "projectId");
+      adapter.init(broker, service);
+      expect(adapter.db).toBeUndefined();
+      expect(adapter.collection).toBeUndefined();
+      adapter.connect();
+      expect(adapter.db).toBeInstanceOf(firebase.firestore.Firestore);
+      expect(adapter.collection).toBeDefined();
+    });
+  });
 });
