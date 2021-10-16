@@ -9,6 +9,24 @@ const {
   MissingProjectIdError,
 } = require("../errors/adapter");
 
+const FirebaseConnectionSingleton = (function () {
+  let _instance;
+
+  const initFirebaseApp = function (apiKey, projectId) {
+    return firebase.initializeApp({ apiKey, projectId });
+  };
+
+  return {
+    getInstance: function (apiKey, projectId) {
+      if (_instance == null) {
+        _instance = initFirebaseApp(apiKey, projectId);
+      }
+
+      return _instance;
+    },
+  };
+})();
+
 class CloudFireStoreDbAdapter {
   /**
    * Creates an instance of CloudFireStoreDbAdapter.
@@ -42,10 +60,10 @@ class CloudFireStoreDbAdapter {
     if (!this.apiKey) throw new MissingApiKeyError();
     if (!this.projectId) throw new MissingProjectIdError();
 
-    this.instance = firebase.initializeApp({
-      apiKey: this.apiKey,
-      projectId: this.projectId,
-    });
+    this.instance = FirebaseConnectionSingleton.getInstance(
+      this.apiKey,
+      this.projectId
+    );
   }
 
   /**
