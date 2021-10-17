@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watchAll",
     "test:unit": "jest \"src/.*\\.unit\\.test\\.js\"",
     "test:unit:watch": "npm run test:unit -- --watch",
     "lint": "eslint --ext=.js src"
