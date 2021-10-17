@@ -182,4 +182,36 @@ describe("dbServiceMixin", () => {
       expect(mockedFindFn).toBeCalledTimes(1);
     });
   });
+
+  describe("create", () => {
+    it("should throw an error if no 'doc' parameter is passed", async () => {
+      try {
+        await broker.call("posts.create", {});
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should throw an error if 'doc' parameter is not a valid object", async () => {
+      try {
+        await broker.call("posts.create", { doc: false });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should call 'find' action if passed parameters are valid", async () => {
+      const mockedCreatedDoc = { id: "3", name: "a new document" };
+      const mockedCreateFn = jest.fn(async () => mockedCreatedDoc);
+
+      service.create = mockedCreateFn;
+
+      const foundDocs = await broker.call("posts.create", {
+        doc: mockedCreatedDoc,
+      });
+      expect(foundDocs).toStrictEqual(mockedCreatedDoc);
+      expect(mockedCreateFn).toHaveBeenCalled();
+      expect(mockedCreateFn).toBeCalledTimes(1);
+    });
+  });
 });
