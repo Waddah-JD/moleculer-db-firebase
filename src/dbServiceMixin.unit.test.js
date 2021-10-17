@@ -263,4 +263,36 @@ describe("dbServiceMixin", () => {
       expect(mockedUpdateFn).toBeCalledTimes(1);
     });
   });
+
+  describe("delete", () => {
+    it("should throw an error if no 'id' parameter is passed", async () => {
+      try {
+        await broker.call("posts.delete", {});
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should throw an error if 'id' parameter is invalid", async () => {
+      try {
+        await broker.call("posts.delete", { id: {} });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should call 'delete' action if passed parameters are valid", async () => {
+      const mockedDeletedDoc = { id: "3", name: "doc name" };
+      const mockedDeleteFn = jest.fn(async () => mockedDeletedDoc);
+
+      service.delete = mockedDeleteFn;
+
+      const foundDocs = await broker.call("posts.delete", {
+        id: mockedDeletedDoc.id,
+      });
+      expect(foundDocs).toStrictEqual(mockedDeletedDoc);
+      expect(mockedDeleteFn).toHaveBeenCalled();
+      expect(mockedDeleteFn).toBeCalledTimes(1);
+    });
+  });
 });
