@@ -7,6 +7,7 @@
     "test": "jest",
     "test:unit": "jest \"src/.*\\.unit\\.test\\.js\"",
     "test:unit:watch": "npm run test:unit -- --watch",
+    "test:int": "jest \"src/.*\\.int\\.test\\.js\"",
     "lint": "eslint --ext=.js src"
   },
   "keywords": [
