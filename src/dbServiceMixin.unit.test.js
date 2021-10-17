@@ -72,7 +72,7 @@ describe("dbServiceMixin", () => {
   });
 
   describe("list", () => {
-    it("should return all documents if neither 'next' nor 'orderBy' parameters are passsed", async () => {
+    it("should call 'getAll' function if neither 'next' nor 'orderBy' parameters are passsed", async () => {
       jest.spyOn(service, "list");
 
       const mockedAllDocs = [
@@ -90,19 +90,19 @@ describe("dbServiceMixin", () => {
       expect(service.list).not.toHaveBeenCalled();
     });
 
-    it("should throw an error if 'orderBy' is of an invalid type", async () => {
+    it("should throw a ValidationError error if 'orderBy' is of an invalid type", async () => {
       // TODO implement me
     });
 
-    it("should return sorted results if 'orderBy' parameter is passed", async () => {
+    it("should call 'list' action if 'orderBy' parameter is passed", async () => {
       // TODO implement me
     });
 
-    it("should throw an error if 'next' is of an invalid type", async () => {
+    it("should throw a ValidationError if 'next' is of an invalid type", async () => {
       // TODO implement me
     });
 
-    it("should return paginated results if 'next' parameter is passed", async () => {
+    it("should call 'list' action if 'next' parameter is passed", async () => {
       // TODO implement me
     });
   });
