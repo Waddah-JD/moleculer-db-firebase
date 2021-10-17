@@ -106,4 +106,80 @@ describe("dbServiceMixin", () => {
       // TODO implement me
     });
   });
+
+  describe("find", () => {
+    it("should throw an error if 'conditions' is of an invalid type", async () => {
+      try {
+        await broker.call("posts.find", { conditions: true });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should throw an error if 'conditions' is an array, but its items are not valid", async () => {
+      try {
+        await broker.call("posts.find", { conditions: [[]] });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should throw an error if 'limit' is of an invalid type", async () => {
+      try {
+        await broker.call("posts.find", { limit: [] });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should throw an error if 'orderBy' is of an invalid type", async () => {
+      try {
+        await broker.call("posts.find", { orderBy: 2 });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should throw an error if 'orderBy' is an array that doesn't contain strings", async () => {
+      try {
+        await broker.call("posts.find", { orderBy: [1, 2, 3] });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should call 'find' action if passed parameters are valid", async () => {
+      const mockedFoundDocs = [
+        { id: "1", name: "a document with ID '1'" },
+        { id: "2", name: "another one" },
+      ];
+      const mockedFindFn = jest.fn(async () => mockedFoundDocs);
+
+      service.find = mockedFindFn;
+
+      const foundDocs = await broker.call("posts.find", {
+        conditions: [["someProperty", "==", 1]],
+        limit: 5,
+        orderBy: ["thisProprtyFirst", "thenThisOne"],
+      });
+      expect(foundDocs).toStrictEqual(mockedFoundDocs);
+      expect(mockedFindFn).toHaveBeenCalled();
+      expect(mockedFindFn).toBeCalledTimes(1);
+    });
+
+    it("should call 'find' action if no parameters are passed", async () => {
+      const mockedFoundDocs = [
+        { id: "1", name: "a document with ID '1'" },
+        { id: "2", name: "another one" },
+      ];
+      const mockedFindFn = jest.fn(async () => mockedFoundDocs);
+
+      service.find = mockedFindFn;
+
+      const foundDocs = await broker.call("posts.find");
+      expect(foundDocs).toStrictEqual(mockedFoundDocs);
+      expect(mockedFindFn).toHaveBeenCalled();
+      expect(mockedFindFn).toBeCalledTimes(1);
+    });
+  });
 });
