@@ -73,7 +73,7 @@ module.exports = {
     get: {
       cache: { keys: ["id"] },
       rest: "GET /:id",
-      params: { id: [...singleIdSchema, ...multipleIdsSchema] },
+      params: { id: [...singleIdSchema, ...multipleIdsSchema] }, // TODO: use appropriate fastest-validator format
       handler(ctx) {
         const { id } = ctx.params;
 
