@@ -200,7 +200,7 @@ describe("dbServiceMixin", () => {
       }
     });
 
-    it("should call 'find' action if passed parameters are valid", async () => {
+    it("should call 'create' action if passed parameters are valid", async () => {
       const mockedCreatedDoc = { id: "3", name: "a new document" };
       const mockedCreateFn = jest.fn(async () => mockedCreatedDoc);
 
@@ -212,6 +212,55 @@ describe("dbServiceMixin", () => {
       expect(foundDocs).toStrictEqual(mockedCreatedDoc);
       expect(mockedCreateFn).toHaveBeenCalled();
       expect(mockedCreateFn).toBeCalledTimes(1);
+    });
+  });
+
+  describe("update", () => {
+    it("should throw an error if no 'id' parameter is passed", async () => {
+      try {
+        await broker.call("posts.update", { values: { name: "new name" } });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should throw an error if 'id' parameter is invalid", async () => {
+      try {
+        await broker.call("posts.update", { id: {} });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should throw an error if no 'values' parameter is passed", async () => {
+      try {
+        await broker.call("posts.update", { id: "docId" });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should throw an error if 'values' parameter is invalid", async () => {
+      try {
+        await broker.call("posts.update", { id: "docId", values: [] });
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
+      }
+    });
+
+    it("should call 'update' action if passed parameters are valid", async () => {
+      const mockedUpdatedDoc = { id: "3", name: "new name" };
+      const mockedUpdateFn = jest.fn(async () => mockedUpdatedDoc);
+
+      service.update = mockedUpdateFn;
+
+      const foundDocs = await broker.call("posts.update", {
+        id: mockedUpdatedDoc.id,
+        values: { name: mockedUpdatedDoc.name },
+      });
+      expect(foundDocs).toStrictEqual(mockedUpdatedDoc);
+      expect(mockedUpdateFn).toHaveBeenCalled();
+      expect(mockedUpdateFn).toBeCalledTimes(1);
     });
   });
 });
