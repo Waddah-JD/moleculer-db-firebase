@@ -70,4 +70,40 @@ describe("dbServiceMixin", () => {
       expect(service.get).not.toHaveBeenCalled();
     });
   });
+
+  describe("list", () => {
+    jest.spyOn(service, "list");
+
+    const mockedAllDocs = [
+      { id: "1", name: "a document with ID '1'" },
+      { id: "2", name: "another one" },
+    ];
+    const mockedGetAllFn = jest.fn(async () => mockedAllDocs);
+
+    service.getAll = mockedGetAllFn;
+
+    it("should return all documents if neither 'next' nor 'orderBy' parameters are passsed", async () => {
+      const allDocs = await broker.call("posts.list");
+      expect(allDocs).toBe(mockedAllDocs);
+      expect(mockedGetAllFn).toHaveBeenCalled();
+      expect(mockedGetAllFn).toBeCalledTimes(1);
+      expect(service.list).not.toHaveBeenCalled();
+    });
+
+    it("should throw an error if 'orderBy' is of an invalid type", async () => {
+      // TODO implement me
+    });
+
+    it("should return sorted results if 'orderBy' parameter is passed", async () => {
+      // TODO implement me
+    });
+
+    it("should throw an error if 'next' is of an invalid type", async () => {
+      // TODO implement me
+    });
+
+    it("should return paginated results if 'next' parameter is passed", async () => {
+      // TODO implement me
+    });
+  });
 });

@@ -95,7 +95,7 @@ module.exports = {
     list: {
       rest: "GET /",
       params: {
-        next: { type: "object", optional: true },
+        next: { type: "object", optional: true }, // TODO improve this paramter type
         orderBy: { type: "string", optional: true },
         limit: limitSchema,
       },
