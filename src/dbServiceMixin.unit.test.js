@@ -72,19 +72,19 @@ describe("dbServiceMixin", () => {
   });
 
   describe("list", () => {
-    jest.spyOn(service, "list");
-
-    const mockedAllDocs = [
-      { id: "1", name: "a document with ID '1'" },
-      { id: "2", name: "another one" },
-    ];
-    const mockedGetAllFn = jest.fn(async () => mockedAllDocs);
-
-    service.getAll = mockedGetAllFn;
-
     it("should return all documents if neither 'next' nor 'orderBy' parameters are passsed", async () => {
+      jest.spyOn(service, "list");
+
+      const mockedAllDocs = [
+        { id: "1", name: "a document with ID '1'" },
+        { id: "2", name: "another one" },
+      ];
+      const mockedGetAllFn = jest.fn(async () => mockedAllDocs);
+
+      service.getAll = mockedGetAllFn;
+
       const allDocs = await broker.call("posts.list");
-      expect(allDocs).toBe(mockedAllDocs);
+      expect(allDocs).toStrictEqual(mockedAllDocs);
       expect(mockedGetAllFn).toHaveBeenCalled();
       expect(mockedGetAllFn).toBeCalledTimes(1);
       expect(service.list).not.toHaveBeenCalled();
