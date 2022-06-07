@@ -33,7 +33,7 @@
     "prettier": "^2.2.1"
   },
   "dependencies": {
-    "firebase": "^8.2.2",
+    "firebase": "^9.8.2",
     "lodash": "^4.17.20"
   }
 }
