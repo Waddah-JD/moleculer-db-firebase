@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "dotenv": "^17.0.0",
-    "eslint": "^9.0.0",
+    "eslint": "^10.0.0",
     "jest": "^30.0.0",
     "moleculer": "^0.14.12",
     "prettier": "^3.0.0"
